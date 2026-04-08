@@ -339,10 +339,16 @@
     <h2 class="cta-h2 r">
         READY TO<br><em>AUTOMATE?</em>
     </h2>
-    <p class="cta-sub r d1">Drop your email and we'll reach out within 24 hours.</p>
+    <p class="cta-sub r d1">Tell us a bit about yourself. We'll reach out within 24 hours.</p>
     <form class="cta-form r d2" id="ctaForm">
-        <input type="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" required>
-        <button type="submit" class="cta-btn" id="ctaBtn">Let's Talk →</button>
+        <div class="cta-row">
+            <input type="text" class="cta-input" id="ctaName" placeholder="Your name" required>
+            <input type="text" class="cta-input" id="ctaCompany" placeholder="Company" required>
+        </div>
+        <div class="cta-row cta-row-bottom">
+            <input type="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" required>
+            <button type="submit" class="cta-btn" id="ctaBtn">Let's Talk →</button>
+        </div>
     </form>
 </section>
 
@@ -406,9 +412,13 @@
 
     document.getElementById('ctaForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = document.getElementById('ctaBtn');
-        const inp = document.getElementById('ctaEmail');
-        const email = inp.value.trim();
+        const btn     = document.getElementById('ctaBtn');
+        const inp     = document.getElementById('ctaEmail');
+        const inpName = document.getElementById('ctaName');
+        const inpCo   = document.getElementById('ctaCompany');
+        const email   = inp.value.trim();
+        const name    = inpName.value.trim();
+        const company = inpCo.value.trim();
 
         btn.textContent = 'Sending…';
         btn.disabled = true;
@@ -421,6 +431,8 @@
                     'Authorization': `Basic ${WEBHOOK_AUTH}`,
                 },
                 body: JSON.stringify({
+                    name,
+                    company,
                     email,
                     submitted_at: new Date().toISOString(),
                     source: 'iybots-website',
@@ -432,6 +444,8 @@
             btn.textContent = 'Sent ✓';
             btn.style.background = '#00cc99';
             inp.value = '';
+            inpName.value = '';
+            inpCo.value = '';
 
             setTimeout(() => {
                 btn.textContent = "Let's Talk →";
