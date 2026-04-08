@@ -401,24 +401,34 @@
     countEls.forEach(el => countObs.observe(el));
 
     /* ---- CTA form ---- */
+    const WEBHOOK_URL   = 'https://oracle.iybots.com/webhook/a8555e69-0a9b-4d61-9222-bf217a848a72';
+    const WEBHOOK_AUTH  = 'REPLACE_WITH_BASE64_TOKEN'; // base64(username:password)
+
     document.getElementById('ctaForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('ctaBtn');
         const inp = document.getElementById('ctaEmail');
         const email = inp.value.trim();
 
-        // Loading state
         btn.textContent = 'Sending…';
         btn.disabled = true;
 
         try {
-            await fetch('/api/contact', {
+            const res = await fetch(WEBHOOK_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${WEBHOOK_AUTH}`,
+                },
+                body: JSON.stringify({
+                    email,
+                    submitted_at: new Date().toISOString(),
+                    source: 'iybots-website',
+                }),
             });
 
-            // Success
+            if (!res.ok) throw new Error('Request failed');
+
             btn.textContent = 'Sent ✓';
             btn.style.background = '#00cc99';
             inp.value = '';
@@ -430,7 +440,6 @@
             }, 3500);
 
         } catch (err) {
-            // Error
             btn.textContent = 'Try again';
             btn.style.background = '#ff3c6e';
             btn.disabled = false;

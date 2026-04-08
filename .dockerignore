@@ -1,0 +1,9 @@
+.git
+.gitignore
+.dockerignore
+.DS_Store
+.env
+.env.*
+.claude/
+Clients_logo/
+node_modules/
