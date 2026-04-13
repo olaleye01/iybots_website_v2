@@ -864,12 +864,20 @@ nav.scrolled {
 footer {
     background: var(--bg);
     border-top: 1px solid var(--text-dim);
-    padding: 48px 0;
+    padding: 48px 0 36px;
 }
-.foot-inner {
+.foot-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 32px;
+}
+.foot-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    border-top: 1px solid var(--text-dim);
 }
 .foot-logo img {
     height: 26px;
@@ -878,6 +886,18 @@ footer {
     transition: opacity 0.2s;
 }
 .foot-logo img:hover { opacity: 0.8; }
+.foot-nap {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+}
+.foot-nap a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.foot-nap a:hover { color: var(--accent); }
 .foot-copy {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.62rem;
@@ -938,7 +958,8 @@ footer {
     .stats-grid     { grid-template-columns: repeat(2,1fr); }
     .process-grid   { grid-template-columns: 1fr; }
     .services-head  { flex-direction: column; align-items: flex-start; }
-    .foot-inner     { flex-direction: column; gap: 24px; text-align: center; }
+    .foot-top       { flex-direction: column; gap: 24px; text-align: center; }
+    .foot-bottom    { flex-direction: column; gap: 12px; text-align: center; }
     .foot-links     { flex-wrap: wrap; justify-content: center; }
     #cta { padding: 110px 24px; }
 }
